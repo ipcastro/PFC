@@ -1,12 +1,30 @@
 {
+  "name": "tcc",
+  "version": "1.0.0",
+  "private": true,
+  "main": "server.js",
+  "description": "TCC Node/Express + MongoDB app",
+  "scripts": {
+    "start": "node server.js",
+    "start:unique": "node server_unique.js",
+    "start:test": "node test-server.js",
+    "dev": "nodemon server.js",
+    "test": "echo \"No tests defined\" && exit 0"
+  },
   "dependencies": {
     "bcryptjs": "^3.0.2",
     "cors": "^2.8.5",
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
-    "mongodb": "^6.16.0",
-    "mongoose": "^8.15.1"
+    "mongodb": "^6.17.0",
+    "mongoose": "^8.18.2"
   },
-  
+  "devDependencies": {
+    "nodemon": "^3.1.7"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "license": "ISC"
 }
