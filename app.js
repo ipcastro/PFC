@@ -6,7 +6,8 @@ const path = require('path');
 const { connectToDatabase } = require('./middleware/js/db');
 
 // Routers
-const userRoutes = require('./routes/userRoutes');
+// Importa o arquivo de rotas de usuários que está versionado
+const userRoutes = require('./routes/user.routes');
 const personagensRouter = require('./routes/personagem.routes');
 const contentRouter = require('./routes/content.route');
 const hqRouter = require('./routes/hq.route');
