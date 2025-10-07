@@ -27,7 +27,7 @@ async function startServer() {
         await connectToDatabase();
         app.listen(port, () => {
             console.log(`✅ Servidor de teste rodando em http://localhost:${port}`);
-            console.log('Teste o endpoint: POST http://localhost:5000/api/users/login');
+            console.log('Teste o endpoint: POST https://pfc-nrpx.onrender.com/api/users/login');
         });
     } catch (error) {
         console.error("❌ Falha ao iniciar o servidor:", error);
