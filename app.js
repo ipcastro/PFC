@@ -74,6 +74,4 @@ app.use((err, req, res, next) => {
   res.status(500).json({ message: 'Ocorreu um erro inesperado no servidor.' });
 });
 
-app.listen(process.env.PORT, () => {
-  console.log(`Servidor rodando na porta ${process.env.PORT}`);
-})
+module.exports = app;
