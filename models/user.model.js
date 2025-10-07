@@ -92,10 +92,19 @@ userSchema.methods.comparePassword = async function(candidatePassword) {
 // Usar o padrão dos outros modelos para evitar conflitos
 // Verificar se o modelo já existe de forma mais robusta
 let User;
-if (mongoose.models.User) {
-    User = mongoose.models.User;
-} else {
-    User = mongoose.model('User', userSchema);
+try {
+    if (mongoose.models.User) {
+        User = mongoose.models.User;
+    } else {
+        User = mongoose.model('User', userSchema);
+    }
+} catch (error) {
+    // Se houver erro de modelo já compilado, usar o existente
+    if (error.name === 'OverwriteModelError') {
+        User = mongoose.models.User;
+    } else {
+        throw error;
+    }
 }
 
 module.exports = User; 
