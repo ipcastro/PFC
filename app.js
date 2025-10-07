@@ -4,6 +4,7 @@ const cors = require('cors');
 const path = require('path');
 
 const userRoutes = require('./routes/user.routes');
+const userRoutesNew = require('./routes/userRoutes');
 const personagensRouter = require('./routes/personagem.routes');
 const contentRouter = require('./routes/content.route');
 const hqRouter = require('./routes/hq.route');
@@ -15,8 +16,9 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Rotas API
-app.use('/api/users', userRoutes);
+// Rotas API - IMPORTANTE: rotas específicas devem vir antes de rotas com parâmetros
+app.use('/api/users', userRoutesNew); // Rotas específicas primeiro (/register, /login)
+app.use('/api/users', userRoutes);    // Rotas com parâmetros depois (/:id)
 app.use('/api/personagens', personagensRouter);
 app.use('/api/content', contentRouter);
 app.use('/api/hq', hqRouter);
