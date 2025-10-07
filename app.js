@@ -3,10 +3,6 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 
-const { connectToDatabase } = require('./middleware/js/db');
-
-// Routers
-// Importa o arquivo de rotas de usuários que está versionado
 const userRoutes = require('./routes/user.routes');
 const personagensRouter = require('./routes/personagem.routes');
 const contentRouter = require('./routes/content.route');
@@ -27,6 +23,7 @@ app.use('/api/hq', hqRouter);
 
 // Arquivos estáticos (se necessário)
 app.use(express.static('public'));
+
 
 // Rota raiz simples
 app.get('/', (req, res) => {
@@ -77,9 +74,6 @@ app.use((err, req, res, next) => {
   res.status(500).json({ message: 'Ocorreu um erro inesperado no servidor.' });
 });
 
-// Nota: a conexão é inicializada pelo bootstrap (server.js) em ambiente local
-// e no entry da função serverless (api/index.js) para evitar conexões duplicadas.
-
-module.exports = app;
-
-
+app.listen(process.env.PORT, () => {
+  console.log(`Servidor rodando na porta ${process.env.PORT}`);
+})
