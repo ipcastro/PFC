@@ -97,77 +97,223 @@
                     <li>
                         <a href="#equipe" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Equipe</a>
                     </li>
+                    <li>
+                        <a href="#faq" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">FAQ</a>
+                    </li>
                 </ul>
             </div>
         </div>
     </nav>
 
-    <section id="inicio" class="pt-32 bg-gradient-to-b from-primary-50 via-secondary-50 to-accent-50 dark:from-gray-900 dark:to-gray-800">
-        <div class="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
+    <!-- Scroll Progress Indicator -->
+    <div class="scroll-indicator" id="scroll-progress"></div>
+
+    <!-- Hero Section Modernizada -->
+    <section id="inicio" class="relative pt-32 bg-gradient-to-br from-primary-50 via-secondary-50 to-accent-50 dark:from-gray-900 dark:to-gray-800 overflow-hidden">
+        <!-- Partículas de fundo -->
+        <div class="particle-system">
+            <div class="particle" style="left: 10%; animation-delay: 0s;"></div>
+            <div class="particle" style="left: 20%; animation-delay: 2s;"></div>
+            <div class="particle" style="left: 30%; animation-delay: 4s;"></div>
+            <div class="particle" style="left: 40%; animation-delay: 6s;"></div>
+            <div class="particle" style="left: 50%; animation-delay: 8s;"></div>
+            <div class="particle" style="left: 60%; animation-delay: 10s;"></div>
+            <div class="particle" style="left: 70%; animation-delay: 12s;"></div>
+            <div class="particle" style="left: 80%; animation-delay: 14s;"></div>
+            <div class="particle" style="left: 90%; animation-delay: 16s;"></div>
+        </div>
+
+        <div class="relative grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
             <div class="mr-auto place-self-center lg:col-span-7">
-                <h1 class="max-w-2xl mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl dark:text-white text-gray-800">
-                    Aprenda Física de Forma Divertida</h1>
-                <p class="max-w-2xl mb-6 font-light text-gray-600 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400">
-                    Embarque em uma jornada fascinante pelo mundo da física com Amélia e Isaac Newton. 
-                    Juntos, eles tornarão o aprendizado da cinemática uma experiência única e envolvente!</p>
-                <a href="#personagens" class="inline-flex items-center justify-center px-5 py-3 mr-3 text-base font-medium text-center text-white rounded-xl bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900 transform transition-all duration-300 hover:scale-105 hover:shadow-lg">
-                    Conhecer os Personagens
-                    <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                <!-- Badge animado -->
+                <div class="inline-flex items-center px-4 py-2 mb-6 text-sm font-medium text-primary-600 bg-primary-100 rounded-full dark:bg-primary-900 dark:text-primary-300 animate-bounce-in">
+                    <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
                     </svg>
+                    Nova experiência de aprendizado
+                </div>
+
+                <h1 class="max-w-2xl mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl dark:text-white text-gray-800">
+                    <span class="text-gradient">Aprenda Física</span><br>
+                    <span class="typing-effect">de Forma Divertida</span>
+                </h1>
+                
+                <p class="max-w-2xl mb-8 font-light text-gray-600 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400 animate-fade-in-up">
+                    Embarque em uma jornada fascinante pelo mundo da física com Amélia e Isaac Newton. 
+                    Juntos, eles tornarão o aprendizado da cinemática uma experiência única e envolvente!
+                </p>
+
+                <!-- Botões de ação modernizados -->
+                <div class="flex flex-col sm:flex-row gap-4 mb-8">
+                    <a href="#personagens" class="btn-neon inline-flex items-center justify-center px-8 py-4 text-base font-medium text-center text-white rounded-xl focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900 transform transition-all duration-300 hover:scale-105 hover:shadow-lg">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                        </svg>
+                    Conhecer os Personagens
+                    </a>
+                    <a href="#hq" class="inline-flex items-center justify-center px-8 py-4 text-base font-medium text-center text-gray-900 bg-white border-2 border-primary-600 rounded-xl hover:bg-primary-50 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900 dark:bg-gray-800 dark:border-primary-500 dark:text-white dark:hover:bg-gray-700 transform transition-all duration-300 hover:scale-105 hover:shadow-lg">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                    </svg>
+                        Começar Aventura
                 </a>
+                </div>
+
+                
             </div>
             
+            <!-- Collage de imagens ao lado do título (estilo IF Code) -->
+            <div class="lg:col-span-5 lg:mt-0 mt-10">
+                <div class="relative h-full">
+                    <div class="absolute inset-0 bg-gradient-to-r from-primary-400/40 to-secondary-400/40 rounded-full blur-3xl opacity-30 animate-pulse-slow"></div>
+
+                    <div class="relative grid grid-cols-2 gap-4 items-center justify-items-center hero-collage">
+                        <!-- Bloco grande (4:3) -->
+                        <div class="col-span-2 md:col-span-1 w-full">
+                            <div class="rounded-2xl overflow-hidden shadow-2xl ring-1 ring-black/5 bg-white dark:bg-gray-800 animate-float" style="animation-delay: 0s; animation-duration: 7s;">
+                                <img src="img/capa hq.jpg" alt="Imagem do projeto 1" class="w-full aspect-[4/3] object-cover">
+                            </div>
+                        </div>
+                        <!-- Bloco quadrado (1:1) -->
+                        <div class="w-full">
+                            <div class="rounded-2xl overflow-hidden shadow-2xl ring-1 ring-black/5 bg-white dark:bg-gray-800 animate-float" style="animation-delay: 0.6s; animation-duration: 8s;">
+                                <img src="img/amelia6.png" alt="Imagem do projeto 2" class="w-full aspect-square object-cover">
+                            </div>
+                        </div>
+                        <!-- Bloco vertical (3:4) -->
+                        <div class="w-full -mt-10 md:mt-0">
+                            <div class="rounded-2xl overflow-hidden shadow-2xl ring-1 ring-black/5 bg-white dark:bg-gray-800 animate-float" style="animation-delay: 1.2s; animation-duration: 7.5s;">
+                                <img src="img/Newton2.jpg" alt="Imagem do projeto 3" class="w-full aspect-[3/4] object-cover">
+                            </div>
+                        </div>
+                        <!-- Imagem adicional ampliada (4:3, igual à capa) -->
+                        <div class="w-full justify-self-end -mt-6 md:-mt-8">
+                            <div class="rounded-2xl overflow-hidden shadow-2xl ring-1 ring-black/5 bg-white dark:bg-gray-800 animate-float" style="animation-delay: 1.8s; animation-duration: 6.5s;">
+                                <img src="img/amelia5.png" alt="Imagem adicional" class="w-full aspect-[4/3] object-cover">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
-    <section id="personagens" class="bg-gradient-to-b from-accent-50 via-primary-50 to-secondary-50 dark:from-gray-800 dark:to-gray-900 py-16 scroll-mt-16">
-        <div class="max-w-screen-xl mx-auto px-4">
-            <h2 class="text-4xl font-bold text-center mb-12 dark:text-white text-gray-800">Conheça Nossos Personagens</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-                <!-- Amélia -->
-                <div class="bg-white dark:bg-gray-700 rounded-2xl shadow-xl overflow-hidden transform transition-all duration-500 hover:scale-105 hover:shadow-2xl">
-                    <div class="md:flex">
-                        <div class="md:w-1/2">
-                            <img src="img/amelia6.png" alt="Amélia" class="w-full h-full object-cover">
+    
+
+    <!-- Seção de Personagens Modernizada -->
+    <section id="personagens" class="relative bg-gradient-to-b from-accent-50 via-primary-50 to-secondary-50 dark:from-gray-800 dark:to-gray-900 py-20 scroll-mt-16 overflow-hidden">
+        <!-- Padrão de fundo animado -->
+        <div class="absolute inset-0 bg-pattern opacity-30"></div>
+        
+        <div class="relative max-w-screen-xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-5xl font-bold mb-6 dark:text-white text-gray-800">
+                    <span class="text-gradient">Conheça Nossos</span><br>
+                    <span class="text-shimmer">Personagens</span>
+                </h2>
+                <p class="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+                    Personagens únicos que tornam o aprendizado da física uma aventura inesquecível
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+                <!-- Amélia - Card Modernizado -->
+                <div class="card-glass rounded-3xl overflow-hidden transform transition-all duration-700 hover:scale-105 group">
+                    <div class="relative">
+                        <div class="absolute inset-0 bg-gradient-to-br from-primary-500/20 to-accent-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        <div class="relative md:flex">
+                            <div class="md:w-1/2 relative overflow-hidden">
+                                <img src="img/amelia6.png" alt="Amélia" class="w-full h-80 md:h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                                <div class="absolute bottom-4 left-4 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                                    <div class="flex items-center space-x-2">
+                                        <div class="w-2 h-2 bg-accent-400 rounded-full animate-pulse"></div>
+                                        <span class="text-sm font-medium">Online</span>
+                                    </div>
+                                </div>
                         </div>
                         <div class="p-8 md:w-1/2">
-                            <h3 class="text-2xl font-bold mb-4 text-gray-900 dark:text-white">Amélia</h3>
-                            <p class="text-gray-600 dark:text-gray-300">
+                                <div class="flex items-center mb-4">
+                                    <h3 class="text-3xl font-bold text-gray-900 dark:text-white">Amélia</h3>
+                                </div>
+                                <p class="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
                                 Uma jovem estudante curiosa e determinada que adora desvendar os mistérios da física. 
                                 Com sua inteligência e perseverança, ela transforma conceitos complexos em aventuras emocionantes.
                             </p>
+                                <div class="flex flex-wrap gap-2 mb-6">
+                                    <span class="px-3 py-1 bg-primary-100 text-primary-700 rounded-full text-sm font-medium dark:bg-primary-900 dark:text-primary-300">Curiosa</span>
+                                    <span class="px-3 py-1 bg-secondary-100 text-secondary-700 rounded-full text-sm font-medium dark:bg-secondary-900 dark:text-secondary-300">Determinada</span>
+                                    <span class="px-3 py-1 bg-accent-100 text-accent-700 rounded-full text-sm font-medium dark:bg-accent-900 dark:text-accent-300">Inteligente</span>
+                                </div>
+                                <button class="btn-magnetic w-full bg-gradient-to-r from-primary-500 to-accent-500 text-white py-3 px-6 rounded-xl font-medium hover:shadow-lg transition-all duration-300">
+                                    Conhecer História
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Isaac Newton -->
-                <div class="bg-white dark:bg-gray-700 rounded-2xl shadow-xl overflow-hidden transform transition-all duration-500 hover:scale-105 hover:shadow-2xl">
-                    <div class="md:flex">
-                        <div class="md:w-1/2">
-                            <img src="img/Newton2.jpg" alt="Isaac Newton" class="w-full h-full object-cover">
+                <!-- Isaac Newton - Card Modernizado -->
+                <div class="card-glass rounded-3xl overflow-hidden transform transition-all duration-700 hover:scale-105 group">
+                    <div class="relative">
+                        <div class="absolute inset-0 bg-gradient-to-br from-secondary-500/20 to-primary-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        <div class="relative md:flex">
+                            <div class="md:w-1/2 relative overflow-hidden">
+                                <img src="img/Newton2.jpg" alt="Isaac Newton" class="w-full h-80 md:h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                                <div class="absolute bottom-4 left-4 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                                    <div class="flex items-center space-x-2">
+                                        <div class="w-2 h-2 bg-yellow-400 rounded-full animate-pulse"></div>
+                                        <span class="text-sm font-medium">Professor</span>
+                                    </div>
+                                </div>
                         </div>
                         <div class="p-8 md:w-1/2">
-                            <h3 class="text-2xl font-bold mb-4 text-gray-900 dark:text-white">Isaac Newton</h3>
-                            <p class="text-gray-600 dark:text-gray-300">
+                                <div class="flex items-center mb-4">
+                                    <h3 class="text-3xl font-bold text-gray-900 dark:text-white">Isaac Newton</h3>
+                                </div>
+                                <p class="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
                                 O famoso físico que, de forma divertida e amigável, guia Amélia através das leis da física. 
                                 Com sua sabedoria e experiência, ele torna o aprendizado uma jornada fascinante.
                             </p>
+                                <div class="flex flex-wrap gap-2 mb-6">
+                                    <span class="px-3 py-1 bg-secondary-100 text-secondary-700 rounded-full text-sm font-medium dark:bg-secondary-900 dark:text-secondary-300">Sábio</span>
+                                    <span class="px-3 py-1 bg-primary-100 text-primary-700 rounded-full text-sm font-medium dark:bg-primary-900 dark:text-primary-300">Experiente</span>
+                                    <span class="px-3 py-1 bg-accent-100 text-accent-700 rounded-full text-sm font-medium dark:bg-accent-900 dark:text-accent-300">Divertido</span>
+                                </div>
+                                <button class="btn-magnetic w-full bg-gradient-to-r from-secondary-500 to-primary-500 text-white py-3 px-6 rounded-xl font-medium hover:shadow-lg transition-all duration-300">
+                                    Conhecer História
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="mt-12 text-center">
-                <p class="text-gray-600 dark:text-gray-300 mb-8 text-lg">
-                    Junte-se a Amélia e Isaac Newton nesta incrível jornada pelo mundo da física!
-                </p>
-                <a href="#hq" class="inline-flex items-center justify-center px-8 py-4 text-lg font-medium text-white rounded-xl bg-accent-600 hover:bg-accent-700 focus:ring-4 focus:ring-accent-300 dark:focus:ring-accent-900 transform transition-all duration-300 hover:scale-105 hover:shadow-lg">
-                    Começar a Aventura
-                    <svg class="w-6 h-6 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <!-- Call to Action Modernizado -->
+            <div class="text-center">
+                <div class="card-glass rounded-3xl p-12 max-w-4xl mx-auto">
+                    <h3 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">
+                        Pronto para começar sua jornada?
+                    </h3>
+                    <p class="text-xl text-gray-600 dark:text-gray-300 mb-8">
+                        Junte-se a Amélia e Isaac Newton nesta incrível aventura pelo mundo da física!
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                        <a href="#hq" class="btn-neon inline-flex items-center justify-center px-8 py-4 text-lg font-medium text-white rounded-xl focus:ring-4 focus:ring-accent-300 dark:focus:ring-accent-900 transform transition-all duration-300 hover:scale-105 hover:shadow-lg">
+                            <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
                     </svg>
-                </a>
+                            Começar Aventura
+                        </a>
+                        <a href="#aprender" class="inline-flex items-center justify-center px-8 py-4 text-lg font-medium text-gray-900 bg-white border-2 border-accent-600 rounded-xl hover:bg-accent-50 focus:ring-4 focus:ring-accent-300 dark:focus:ring-accent-900 dark:bg-gray-800 dark:border-accent-500 dark:text-white dark:hover:bg-gray-700 transform transition-all duration-300 hover:scale-105 hover:shadow-lg">
+                            <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                            </svg>
+                            O que Aprender
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -175,9 +321,9 @@
     <section id="aprender" class="bg-gradient-to-b from-secondary-50 via-accent-50 to-primary-50 dark:from-gray-900 dark:to-gray-800 py-16 scroll-mt-16">
         <div class="max-w-screen-xl mx-auto px-4">
             <h2 class="text-4xl font-bold text-center mb-12 dark:text-white text-gray-800">O que você vai aprender</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-                <div class="space-y-6">
-                    <div class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-xl transform transition-all duration-500 hover:scale-105 hover:shadow-2xl">
+            <div class="grid grid-cols-1 items-center">
+                <div class="space-y-6 max-w-3xl mx-auto">
+                    <div class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-xl transform transition-all duration-500 hover:scale-105 hover:shadow-2xl animate-float">
                         <h3 class="text-2xl font-bold mb-4 dark:text-white text-gray-800">Movimento Retilíneo Uniforme</h3>
                         <p class="text-gray-600 dark:text-gray-300 mb-6 text-lg">Compreenda como os objetos se movem em linha reta com velocidade constante.</p>
                         <a href="o-que-aprender.html" class="inline-flex items-center text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-500 text-lg">
@@ -276,6 +422,113 @@
         </div>
     </section>
 
+    <!-- Seção FAQ Interativa -->
+    <section id="faq" class="bg-gradient-to-b from-secondary-50 via-accent-50 to-primary-50 dark:from-gray-900 dark:to-gray-800 py-20 scroll-mt-16">
+        <div class="max-w-4xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-5xl font-bold mb-6 dark:text-white text-gray-800">
+                    <span class="text-gradient">Perguntas</span>
+                    <span class="text-shimmer">Frequentes</span>
+                </h2>
+                <p class="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+                    Tire suas dúvidas sobre nossa plataforma de aprendizado interativo
+                </p>
+            </div>
+
+            <div class="space-y-4">
+                <!-- FAQ Item 1 -->
+                <div class="card-glass rounded-2xl overflow-hidden">
+                    <button class="faq-toggle w-full p-6 text-left flex justify-between items-center hover:bg-white/10 transition-colors duration-300">
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                            Como funciona o aprendizado interativo?
+                        </h3>
+                        <svg class="w-6 h-6 text-primary-600 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div class="faq-content hidden px-6 pb-6">
+                        <p class="text-gray-600 dark:text-gray-300 leading-relaxed">
+                            Nosso sistema combina histórias em quadrinhos interativas com exercícios práticos, 
+                            onde você acompanha Amélia e Newton em aventuras que ensinam conceitos de física de forma divertida e envolvente.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 2 -->
+                <div class="card-glass rounded-2xl overflow-hidden">
+                    <button class="faq-toggle w-full p-6 text-left flex justify-between items-center hover:bg-white/10 transition-colors duration-300">
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                            Preciso ter conhecimento prévio em física?
+                        </h3>
+                        <svg class="w-6 h-6 text-primary-600 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div class="faq-content hidden px-6 pb-6">
+                        <p class="text-gray-600 dark:text-gray-300 leading-relaxed">
+                            Não! Nossa plataforma foi desenvolvida para iniciantes. Os conceitos são explicados de forma gradual 
+                            e didática, começando do básico e evoluindo naturalmente.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 3 -->
+                <div class="card-glass rounded-2xl overflow-hidden">
+                    <button class="faq-toggle w-full p-6 text-left flex justify-between items-center hover:bg-white/10 transition-colors duration-300">
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                            Posso acessar o conteúdo offline?
+                        </h3>
+                        <svg class="w-6 h-6 text-primary-600 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div class="faq-content hidden px-6 pb-6">
+                        <p class="text-gray-600 dark:text-gray-300 leading-relaxed">
+                            Sim! Você pode baixar o PDF da HQ para ler offline. O quiz interativo e outras funcionalidades 
+                            avançadas requerem conexão com a internet.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 4 -->
+                <div class="card-glass rounded-2xl overflow-hidden">
+                    <button class="faq-toggle w-full p-6 text-left flex justify-between items-center hover:bg-white/10 transition-colors duration-300">
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                            Há certificado ao final do curso?
+                        </h3>
+                        <svg class="w-6 h-6 text-primary-600 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div class="faq-content hidden px-6 pb-6">
+                        <p class="text-gray-600 dark:text-gray-300 leading-relaxed">
+                            Atualmente, nossa plataforma é focada no aprendizado interativo. Estamos trabalhando em um sistema 
+                            de certificação que será implementado em breve.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 5 -->
+                <div class="card-glass rounded-2xl overflow-hidden">
+                    <button class="faq-toggle w-full p-6 text-left flex justify-between items-center hover:bg-white/10 transition-colors duration-300">
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                            Como posso acompanhar meu progresso?
+                        </h3>
+                        <svg class="w-6 h-6 text-primary-600 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div class="faq-content hidden px-6 pb-6">
+                        <p class="text-gray-600 dark:text-gray-300 leading-relaxed">
+                            O quiz interativo registra suas respostas e fornece feedback imediato. Você pode refazer os exercícios 
+                            quantas vezes quiser para melhorar sua compreensão dos conceitos.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section id="contato" class="bg-gradient-to-b from-secondary-50 via-accent-50 to-primary-50 dark:from-gray-900 dark:to-gray-800 py-16 scroll-mt-16">
         <div class="py-8 lg:py-16 px-4 mx-auto max-w-screen-md">
             <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-center text-gray-900 dark:text-white">Entre em Contato</h2>
@@ -298,30 +551,52 @@
                 </div>
     </section>
 
-    <footer class="bg-gradient-to-b from-primary-50 via-secondary-50 to-accent-50 dark:from-gray-800 dark:to-gray-900">
-        <div class="max-w-screen-xl mx-auto px-4 py-8 md:py-16">
-            <div class="text-center text-gray-600 dark:text-gray-400">
-                <div class="mb-6 flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-8">
-                    <a href="https://www.instagram.com/mari.denig/" target="_blank" rel="noopener noreferrer" class="flex items-center space-x-2 hover:text-blue-600 dark:hover:text-blue-400">
-                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-                        </svg>
-                        <span>Mariani Denig</span>
+    <footer class="bg-gray-900 text-gray-300">
+        <div class="max-w-screen-xl mx-auto px-6 py-16 grid grid-cols-1 md:grid-cols-4 gap-12">
+            <!-- Logo + Descrição -->
+            <div>
+                <div class="flex items-center gap-3 mb-4">
+                    <img src="img/logopng.png" class="h-10" alt="Física Divertida Logo">
+                    <span class="text-xl font-semibold text-white">Física Divertida</span>
+                </div>
+                <p class="text-sm leading-6">
+                    Uma plataforma para aprender física de forma envolvente, resolver problemas e se conectar com uma comunidade apaixonada por ciência.
+                </p>
+            </div>
+            <!-- Plataforma -->
+            <div>
+                <h4 class="text-white font-semibold mb-4">Plataforma</h4>
+                <ul class="space-y-3 text-sm">
+                    <li><a href="#personagens" class="hover:text-white">Personagens</a></li>
+                    <li><a href="#aprender" class="hover:text-white">O que você vai aprender</a></li>
+                    <li><a href="#hq" class="hover:text-white">HQ</a></li>
+                </ul>
+            </div>
+            <!-- Suporte -->
+            <div>
+                <h4 class="text-white font-semibold mb-4">Suporte</h4>
+                <ul class="space-y-3 text-sm">
+                    <li><a href="#contato" class="hover:text-white">Contato</a></li>
+                    <li><a href="#faq" class="hover:text-white">FAQ</a></li>
+                    <li><a href="#" class="hover:text-white">Termos de Uso</a></li>
+                </ul>
+            </div>
+            <!-- Redes -->
+            <div class="md:text-right">
+                <h4 class="text-white font-semibold mb-4">Redes Sociais</h4>
+                <div class="flex md:justify-end gap-4">
+                    <a href="#" aria-label="GitHub" class="hover:text-white">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 .5a12 12 0 00-3.79 23.4c.6.11.82-.26.82-.58v-2.02c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.74.08-.73.08-.73 1.21.08 1.85 1.25 1.85 1.25 1.07 1.84 2.82 1.31 3.51 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.34-5.47-5.95 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.12-3.17 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 016 0c2.29-1.55 3.3-1.23 3.3-1.23.66 1.65.25 2.87.12 3.17.77.84 1.24 1.91 1.24 3.22 0 4.62-2.8 5.65-5.48 5.95.43.38.81 1.12.81 2.26v3.35c0 .32.22.7.82.58A12 12 0 0012 .5z"/></svg>
                     </a>
-                    <a href="https://www.instagram.com/ipcastr/" target="_blank" rel="noopener noreferrer" class="flex items-center space-x-2 hover:text-blue-600 dark:hover:text-blue-400">
-                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-                        </svg>
-                        <span>Isabela Castro</span>
-                    </a>
-                    <a href="https://www.instagram.com/mariasagava/" target="_blank" rel="noopener noreferrer" class="flex items-center space-x-2 hover:text-blue-600 dark:hover:text-blue-400">
-                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-                        </svg>
-                        <span>Maria Eduarda Sagava</span>
+                    <a href="#" aria-label="Email" class="hover:text-white">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M2 6a2 2 0 012-2h16a2 2 0 012 2v.4l-10 6.25L2 6.4V6zm0 3.2V18a2 2 0 002 2h16a2 2 0 002-2V9.2l-9.4 5.88a2 2 0 01-2.12 0L2 9.2z"/></svg>
                     </a>
                 </div>
-                <p>&copy; 2024 Física Divertida. Todos os direitos reservados.</p>
+            </div>
+        </div>
+        <div class="border-t border-white/10">
+            <div class="max-w-screen-xl mx-auto px-6 py-6 text-center text-xs text-gray-400">
+                &copy; 2025 Física Divertida. Todos os direitos reservados.
             </div>
         </div>
     </footer>
@@ -404,6 +679,101 @@
         button?.addEventListener('click', function () {
                 menu.classList.toggle('hidden');
         });
+
+        // Scroll Progress Indicator
+        function updateScrollProgress() {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPercent = (scrollTop / docHeight) * 100;
+            document.getElementById('scroll-progress').style.width = scrollPercent + '%';
+        }
+
+        // Counter Animation
+        function animateCounters() {
+            const counters = document.querySelectorAll('.counter');
+            counters.forEach(counter => {
+                const target = parseInt(counter.getAttribute('data-target'));
+                const duration = 2000; // 2 seconds
+                const increment = target / (duration / 16); // 60fps
+                let current = 0;
+                
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= target) {
+                        current = target;
+                        clearInterval(timer);
+                    }
+                    counter.textContent = Math.floor(current);
+                }, 16);
+            });
+        }
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    if (entry.target.classList.contains('counter')) {
+                        animateCounters();
+                    }
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements for animation
+        document.addEventListener('DOMContentLoaded', () => {
+            // Observe counter elements
+            document.querySelectorAll('.counter').forEach(counter => {
+                observer.observe(counter);
+            });
+
+            // Observe reveal elements
+            document.querySelectorAll('.reveal').forEach(el => {
+                observer.observe(el);
+            });
+
+            // Add reveal class to elements
+            document.querySelectorAll('section').forEach(section => {
+                section.classList.add('reveal');
+            });
+        });
+
+        // FAQ Toggle Functionality
+        function initFAQ() {
+            document.querySelectorAll('.faq-toggle').forEach(toggle => {
+                toggle.addEventListener('click', () => {
+                    const content = toggle.nextElementSibling;
+                    const icon = toggle.querySelector('svg');
+                    
+                    // Toggle content visibility
+                    content.classList.toggle('hidden');
+                    
+                    // Rotate icon
+                    icon.classList.toggle('rotate-180');
+                    
+                    // Close other FAQs
+                    document.querySelectorAll('.faq-toggle').forEach(otherToggle => {
+                        if (otherToggle !== toggle) {
+                            const otherContent = otherToggle.nextElementSibling;
+                            const otherIcon = otherToggle.querySelector('svg');
+                            otherContent.classList.add('hidden');
+                            otherIcon.classList.remove('rotate-180');
+                        }
+                    });
+                });
+            });
+        }
+
+        // Scroll event listener
+        window.addEventListener('scroll', updateScrollProgress);
+
+        // Initialize FAQ on DOM load
+        document.addEventListener('DOMContentLoaded', initFAQ);
 
         // Exigir autenticação para downloads marcados
         const API_BASE = 'https://pfc-nrpx.onrender.com';
