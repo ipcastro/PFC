@@ -5,7 +5,7 @@ let botId = "quiz-cinematica";
 // Salvar histórico
 async function salvarHistorico() {
   try {
-    await fetch("/api/chat/salvar-historico", {
+    await fetch("https://pfc-nrpx.onrender.com/api/chat/salvar-historico", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
