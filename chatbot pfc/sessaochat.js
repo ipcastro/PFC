@@ -24,7 +24,7 @@ async function salvarHistorico() {
 // Carregar históricos
 async function carregarHistoricoSessoes() {
   try {
-    const resp = await fetch("/api/chat/historicos");
+    const resp = await fetch("https://pfc-nrpx.onrender.com/api/chat/historicos");
     if (!resp.ok) throw new Error("Falha ao buscar históricos: " + resp.statusText);
     const sessoes = await resp.json();
     const lista = document.getElementById("lista-sessoes");
