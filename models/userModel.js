@@ -1,10 +1,4 @@
-const mongoose = require('mongoose');
+// Este arquivo existe apenas para compatibilidade
+// Re-exporta o modelo User do arquivo user.model.js
+module.exports = require('./user.model');
 
-const userSchema = new mongoose.Schema({
-  nome: { type: String, required: true },
-  sobrenome: { type: String, required: true },
-  email: { type: String, required: true, unique: true },
-  senha: { type: String, required: true }
-});
-
-module.exports = mongoose.model('User', userSchema);
