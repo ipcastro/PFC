@@ -46,7 +46,7 @@ async function criarPersonagem(event) {
     const dados = Object.fromEntries(formData.entries());
 
     try {
-        const response = await fetch('http://localhost:5000/api/personagens', {
+        const response = await fetch('https://pfc-nrpx.onrender.com/api/personagens', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -68,7 +68,7 @@ async function criarPersonagem(event) {
 // Função para editar personagem
 async function editarPersonagem(id) {
     try {
-        const response = await fetch(`http://localhost:5000/api/personagens/${id}`);
+        const response = await fetch(`https://pfc-nrpx.onrender.com/api/personagens/${id}`);
         if (!response.ok) throw new Error('Erro ao carregar dados do personagem');
         
         const personagem = await response.json();
@@ -99,7 +99,7 @@ async function salvarEdicao(event) {
     const dados = Object.fromEntries(formData.entries());
 
     try {
-        const response = await fetch(`http://localhost:5000/api/personagens/${id}`, {
+        const response = await fetch(`https://pfc-nrpx.onrender.com/api/personagens/${id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -122,7 +122,7 @@ async function excluirPersonagem(id) {
     if (!confirm('Tem certeza que deseja excluir este personagem?')) return;
 
     try {
-        const response = await fetch(`http://localhost:5000/api/personagens/${id}`, {
+        const response = await fetch(`https://pfc-nrpx.onrender.com/api/personagens/${id}`, {
             method: 'DELETE'
         });
 
