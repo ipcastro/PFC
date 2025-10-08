@@ -383,7 +383,7 @@ async function startServer() {
         await connectToDatabase(); // Conecta ao MongoDB
         app.listen(port, () => {
             console.log(`Servidor rodando em http://localhost:${port}`);
-            console.log(`Banco de dados conectado: ${getDb().databaseName}`);
+            //console.log(`Banco de dados conectado: ${getDb().databaseName}`);
         });
     } catch (error) {
         console.error("Falha ao iniciar o servidor:", error);
