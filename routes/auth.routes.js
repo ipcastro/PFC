@@ -3,7 +3,50 @@ const router = express.Router();
 const jwt = require('jsonwebtoken');
 const getUserModel = require('../models/user.model');
 const User = getUserModel();
-const { protect } = require('../middleware/auth.middleware');
+const authMiddleware = require('../middleware/auth.middleware');
+
+// Rota de registro de usuários
+router.post('/register', async (req, res) => {
+    try {
+        const { nome, sobrenome, email, senha } = req.body;
+
+        // Validar dados obrigatórios
+        if (!nome || !sobrenome || !email || !senha) {
+            return res.status(400).json({ 
+                message: 'Todos os campos são obrigatórios' 
+            });
+        }
+
+        // Verificar se email já existe
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+            return res.status(400).json({ 
+                message: 'Este email já está cadastrado' 
+            });
+        }
+
+        // Criar novo usuário
+        const user = new User({
+            nome,
+            sobrenome,
+            email,
+            password: senha, // O campo no modelo é password
+            role: 'user' // Papel padrão para novos usuários
+        });
+
+        await user.save();
+
+        res.status(201).json({
+            message: 'Cadastro realizado com sucesso! Redirecionando para o login...',
+            userId: user._id
+        });
+    } catch (error) {
+        console.error('Erro ao registrar usuário:', error);
+        res.status(500).json({ 
+            message: 'Erro interno do servidor ao registrar usuário' 
+        });
+    }
+});
 
 // Rota de login
 router.post('/login', async (req, res) => {
@@ -49,7 +92,7 @@ router.post('/login', async (req, res) => {
 });
 
 // Rota para verificar token (usado pelo frontend para validar sessão)
-router.get('/verify', protect, (req, res) => {
+router.get('/verify', authMiddleware, (req, res) => {
     res.json({
         user: {
             id: req.user._id,

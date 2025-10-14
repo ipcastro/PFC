@@ -5,17 +5,15 @@ const jwt = require('jsonwebtoken');
 
 // Controller para registro de usuário
 exports.registerUser = async (req, res) => {
-  console.log("Chegou aqui");
   try {
-    console.log('Payload recebido em /api/users/register:', req.body);
     const { nome, sobrenome, email, senha } = req.body;
     if (!nome || !sobrenome || !email || !senha) {
-      return res.status(400).json({ message: 'Preencha todos os campos obrigatórios.' });
+      return res.status(400).json({ message: 'Todos os campos são obrigatórios' });
     }
     // Verifica se o e-mail já existe
     const userExists = await User.findOne({ email });
     if (userExists) {
-      return res.status(400).json({ message: 'E-mail já cadastrado.' });
+      return res.status(400).json({ message: 'Este e-mail já está cadastrado' });
     }
     // Hash da senha
     const hashedPassword = await bcrypt.hash(senha, 10);

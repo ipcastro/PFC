@@ -2,43 +2,33 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
 const userSchema = new mongoose.Schema({
-    // Campos do sistema antigo (admin/editor)
-    username: {
-        type: String,
-        unique: true,
-        sparse: true, // Permite valores nulos para campos únicos
-        trim: true,
-        minlength: [3, 'Nome de usuário deve ter pelo menos 3 caracteres']
-    },
-    password: {
-        type: String,
-        minlength: [6, 'Senha deve ter pelo menos 6 caracteres']
-    },
-    role: {
-        type: String,
-        enum: ['admin', 'editor'],
-        default: 'editor'
-    },
-    
-    // Campos do sistema novo (cadastro público)
     nome: {
         type: String,
+        required: [true, 'Nome é obrigatório'],
         trim: true
     },
     sobrenome: {
         type: String,
+        required: [true, 'Sobrenome é obrigatório'],
         trim: true
     },
     email: {
         type: String,
+        required: [true, 'Email é obrigatório'],
         unique: true,
-        sparse: true, // Permite valores nulos para campos únicos
         trim: true,
-        lowercase: true
+        lowercase: true,
+        match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Email inválido']
     },
-    senha: {
+    password: {
         type: String,
+        required: [true, 'Senha é obrigatória'],
         minlength: [6, 'Senha deve ter pelo menos 6 caracteres']
+    },
+    role: {
+        type: String,
+        enum: ['admin', 'editor', 'user'],
+        default: 'user'
     },
     
     createdAt: {
@@ -49,8 +39,7 @@ const userSchema = new mongoose.Schema({
 
 // Middleware para hash da senha antes de salvar
 userSchema.pre('save', async function(next) {
-    // Hash da senha do sistema antigo (password)
-    if (this.isModified('password') && this.password) {
+    if (this.isModified('password')) {
         try {
             const salt = await bcrypt.genSalt(10);
             this.password = await bcrypt.hash(this.password, salt);
@@ -58,32 +47,13 @@ userSchema.pre('save', async function(next) {
             return next(error);
         }
     }
-    
-    // Hash da senha do sistema novo (senha)
-    if (this.isModified('senha') && this.senha) {
-        try {
-            const salt = await bcrypt.genSalt(10);
-            this.senha = await bcrypt.hash(this.senha, salt);
-        } catch (error) {
-            return next(error);
-        }
-    }
-    
     next();
 });
 
 // Método para comparar senhas
 userSchema.methods.comparePassword = async function(candidatePassword) {
     try {
-        // Tenta comparar com password (sistema antigo)
-        if (this.password) {
-            return await bcrypt.compare(candidatePassword, this.password);
-        }
-        // Tenta comparar com senha (sistema novo)
-        if (this.senha) {
-            return await bcrypt.compare(candidatePassword, this.senha);
-        }
-        return false;
+        return await bcrypt.compare(candidatePassword, this.password);
     } catch (error) {
         throw error;
     }
