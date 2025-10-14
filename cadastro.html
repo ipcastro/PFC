@@ -93,6 +93,7 @@
     <!-- Scripts -->
     <script src="middleware/js/tema.js"></script>
     <script src="middleware/js/scroll.js"></script>
+    <script src="middleware/js/config.js"></script>
     <script>
         // Script de cadastro
         const form = document.getElementById('registerForm');
@@ -112,7 +113,7 @@
             }
             const data = { nome, sobrenome, email, senha };
             try {
-                const res = await fetch('https://pfc-nrpx.onrender.com/api/users/register', {
+                const res = await fetch(`${API_CONFIG.API_BASE}${API_CONFIG.ENDPOINTS.REGISTER}`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(data)
@@ -122,6 +123,10 @@
                     msg.style.color = 'green';
                     msg.textContent = result.message;
                     form.reset();
+                    // Redirecionar para login após 2 segundos
+                    setTimeout(() => {
+                        window.location.href = 'login.html';
+                    }, 2000);
                 } else {
                     msg.style.color = 'red';
                     msg.textContent = result.message || 'Erro ao cadastrar.';
@@ -129,6 +134,7 @@
             } catch (err) {
                 msg.style.color = 'red';
                 msg.textContent = 'Erro de conexão com o servidor.';
+                console.error('Erro:', err);
             }
         });
     </script>

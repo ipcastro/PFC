@@ -184,6 +184,7 @@
             text-decoration: none;
             font-size: 16px;
             font-weight: 500;
+            white-space: nowrap;
         }
 
         .home-btn:hover {
@@ -701,7 +702,7 @@
             }
 
             .header-controls {
-                gap: 8px;
+                gap: 4px;
             }
 
             .logo-text {
@@ -709,8 +710,14 @@
             }
 
             .home-btn, .history-btn {
-                padding: 6px 12px;
-                font-size: 13px;
+                padding: 6px 8px;
+                font-size: 12px;
+            }
+
+            .home-btn .home-text {
+                max-width: 60px;
+                overflow: hidden;
+                text-overflow: ellipsis;
             }
 
             .theme-btn {
@@ -765,6 +772,12 @@
             <div class="header-controls">
                 <a href="../index.html" class="home-btn" title="Voltar à Página Inicial">
                     <span class="home-text">Página Inicial</span>
+                </a>
+                <a href="../cadastro.html" class="home-btn" title="Fazer Cadastro">
+                    <span class="home-text">Cadastro</span>
+                </a>
+                <a href="../login.html" class="home-btn" title="Fazer Login">
+                    <span class="home-text">Login</span>
                 </a>
                 <button id="load-history-button" class="history-btn">Histórico</button>
                 <button id="theme-toggle" type="button" class="theme-btn">
@@ -824,6 +837,7 @@
 
         </main>
     </div>
+    <script src="../js/auth.js"></script>
     <script src="config.js"></script>
     <script type="module" src="indexchat.js"></script>
     <!-- SCRIPT PARA O HISTÓRICO -->

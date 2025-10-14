@@ -12,6 +12,11 @@ const Page = require('./models/pages.model');
 const app = express();
 const router = express.Router();
 
+// Importar rotas de autenticação e middleware
+const authRoutes = require('./routes/auth.routes');
+const { authMiddleware } = require('./middleware/auth.middleware.js');
+const path = require('path');
+
 // Configurar middlewares globais
 app.use(cors());
 app.use(express.json());
@@ -261,8 +266,39 @@ router.get('/hq', async (req, res) => {
 
 // ... (outras rotas de HQ e Pages seguem o mesmo padrão)
 
-// Montar o roteador na aplicação
+// Montar os roteadores na aplicação
+// Rota protegida para download de PDFs
+router.get('/download/pdf', authMiddleware, (req, res) => {
+    try {
+        const file = req.query.file;
+        if (!file) {
+            return res.status(400).json({ message: "Nome do arquivo não fornecido" });
+        }
+
+        // Verificar se o arquivo solicitado está na pasta pdf
+        if (!file.endsWith('.pdf')) {
+            return res.status(400).json({ message: "Formato de arquivo inválido" });
+        }
+
+        const filePath = path.join(__dirname, 'pdf', file);
+        res.download(filePath, (err) => {
+            if (err) {
+                console.error("Erro ao fazer download do arquivo:", err);
+                if (err.code === 'ENOENT') {
+                    res.status(404).json({ message: "Arquivo não encontrado" });
+                } else {
+                    res.status(500).json({ message: "Erro ao fazer download do arquivo" });
+                }
+            }
+        });
+    } catch (error) {
+        console.error("Erro ao processar download:", error);
+        res.status(500).json({ message: "Erro interno do servidor" });
+    }
+});
+
 app.use('/api', router);
+app.use('/api/users', authRoutes);
 
 // Rota raiz
 app.get('/', (req, res) => {
