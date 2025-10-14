@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste de Configuração da API</title>
+</head>
+<body>
+    <h1>Teste de Configuração da API</h1>
+    <div id="resultado"></div>
+    
+    <script src="js/api-config.js"></script>
+    <script>
+        document.getElementById('resultado').innerHTML = `
+            <p><strong>Hostname:</strong> ${window.location.hostname}</p>
+            <p><strong>API_BASE:</strong> ${window.API_BASE}</p>
+            <p><strong>URL completa:</strong> ${window.API_BASE}/api/chat/historicos</p>
+        `;
+        
+        // Testar se a API está respondendo
+        fetch(`${window.API_BASE}/api/ranking/visualizar`)
+            .then(response => {
+                if (response.ok) {
+                    document.getElementById('resultado').innerHTML += '<p style="color: green;">✅ API está respondendo!</p>';
+                } else {
+                    document.getElementById('resultado').innerHTML += `<p style="color: red;">❌ API retornou status: ${response.status}</p>`;
+                }
+            })
+            .catch(error => {
+                document.getElementById('resultado').innerHTML += `<p style="color: red;">❌ Erro ao conectar: ${error.message}</p>`;
+            });
+    </script>
+</body>
+</html>

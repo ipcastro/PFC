@@ -8,6 +8,7 @@ const userRoutesNew = require('./routes/userRoutes');
 const personagensRouter = require('./routes/personagem.routes');
 const contentRouter = require('./routes/content.route');
 const hqRouter = require('./routes/hq.route');
+const chatRouter = require('./routes/chat.routes');
 
 const app = express();
 
@@ -22,6 +23,10 @@ app.use('/api/users', userRoutes);    // Rotas com parâmetros depois (/:id)
 app.use('/api/personagens', personagensRouter);
 app.use('/api/content', contentRouter);
 app.use('/api/hq', hqRouter);
+app.use('/api/chat', chatRouter);
+
+// Rotas de compatibilidade para o chatbot (sem prefixo /chat)
+app.use('/api', chatRouter);
 
 // Arquivos estáticos (se necessário)
 app.use(express.static('public'));

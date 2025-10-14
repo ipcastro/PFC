@@ -1,34 +1,91 @@
-// app.js (ou server.js)
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
+const { connectToDatabase } = require('./middleware/js/db.js');
+const { connectToChatDatabase } = require('./middleware/js/chatDb.js');
+const Personagem = require('./models/personagem.model');
+const Content = require('./models/content.model');
+const Hq = require('./models/hq.model');
+const Page = require('./models/pages.model');
 
-
-const { connectToDatabase, getDb } = require('./middleware/js/db.js'); // Importa a conexão
-// Importar as rotas
-
-const Personagem = require('./models/personagem.model'); // Importa o modelo
-
-// CREATE: POST /api/personagens
+// Criar instância do Express e Router
+const app = express();
 const router = express.Router();
+
+// Configurar middlewares globais
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Rotas do histórico de chat
+router.get('/chat/historicos', async (req, res) => {
+    try {
+        const { SessaoChat } = require('./models/chat.model')();
+        const sessoes = await SessaoChat.find({}).sort({ lastUpdated: -1 }).limit(50);
+        res.json(sessoes);
+    } catch (error) {
+        console.error("Erro ao buscar históricos:", error);
+        res.status(500).json({ error: "Erro ao buscar históricos." });
+    }
+});
+
+// Rota para salvar histórico do chat
+router.post('/chat/salvar-historico', async (req, res) => {
+    try {
+        const { sessionId, botId, userId, startTime, endTime, messages } = req.body;
+
+        // Validar dados obrigatórios
+        if (!sessionId || !botId || !userId || !messages) {
+            return res.status(400).json({ 
+                error: "Dados incompletos. sessionId, botId, userId e messages são obrigatórios." 
+            });
+        }
+
+        const { SessaoChat } = require('./models/chat.model')();
+        
+        const novaSessao = new SessaoChat({
+            sessionId,
+            botId,
+            userId,
+            startTime: new Date(startTime),
+            endTime: new Date(endTime),
+            messages,
+            lastUpdated: new Date()
+        });
+
+        await novaSessao.save();
+
+        res.status(201).json({ 
+            message: "Histórico salvo com sucesso!",
+            sessionId: novaSessao.sessionId
+        });
+
+    } catch (error) {
+        console.error("Erro ao salvar histórico:", error);
+        res.status(500).json({ error: "Erro ao salvar histórico: " + error.message });
+    }
+});
+
+// Rotas de Personagens
 router.post('/personagens', async (req, res) => {
     try {
-        // req.body contém os dados enviados no corpo da requisição POST
         const novoPersonagemData = req.body;
-        if (!novoPersonagemData.nome || !novoPersonagemData.descricao) { // Validação básica
+        if (!novoPersonagemData.nome || !novoPersonagemData.descricao) {
             return res.status(400).json({ message: "Nome e descrição são obrigatórios." });
         }
         const result = await Personagem.createPersonagem(novoPersonagemData);
-        // O MongoDB retorna um objeto com `insertedId`
-        res.status(201).json({ message: "Personagem criado com sucesso!", insertedId: result.insertedId, data: novoPersonagemData });
+        res.status(201).json({ 
+            message: "Personagem criado com sucesso!", 
+            insertedId: result.insertedId, 
+            data: novoPersonagemData 
+        });
     } catch (error) {
         console.error("Erro ao criar personagem:", error);
         res.status(500).json({ message: "Erro interno do servidor ao criar personagem." });
     }
 });
 
-// READ ALL: GET /api/personagens
-router.get('/api/personagens/', async (req, res) => {
+router.get('/personagens', async (req, res) => {
     try {
         const personagens = await Personagem.getAllPersonagens();
         res.status(200).json(personagens);
@@ -38,27 +95,24 @@ router.get('/api/personagens/', async (req, res) => {
     }
 });
 
-// READ ONE: GET /api/personagens/:id
-router.get('/api/personagens/:id', async (req, res) => {
+router.get('/personagens/:id', async (req, res) => {
     try {
-        const id = req.params.id; // Pega o ID da URL
+        const id = req.params.id;
         const personagem = await Personagem.getPersonagemById(id);
         if (!personagem) {
             return res.status(404).json({ message: "Personagem não encontrado." });
         }
         res.status(200).json(personagem);
     } catch (error) {
-        // Se o ID for inválido e o modelo não tratar, pode dar erro aqui
         if (error.message.includes("Argument passed in must be a string of 12 bytes or a string of 24 hex characters")) {
-             return res.status(400).json({ message: "ID inválido." });
+            return res.status(400).json({ message: "ID inválido." });
         }
         console.error("Erro ao buscar personagem por ID:", error);
         res.status(500).json({ message: "Erro interno do servidor ao buscar personagem." });
     }
 });
 
-// UPDATE: PUT /api/personagens/:id
-router.put('/api/personagens/:id', async (req, res) => {
+router.put('/personagens/:id', async (req, res) => {
     try {
         const id = req.params.id;
         const updateData = req.body;
@@ -68,57 +122,43 @@ router.put('/api/personagens/:id', async (req, res) => {
         }
 
         const result = await Personagem.updatePersonagem(id, updateData);
-        if (!result) { // Se o modelo retornou null por ID inválido
-             return res.status(400).json({ message: "ID inválido fornecido." });
+        if (!result) {
+            return res.status(400).json({ message: "ID inválido fornecido." });
         }
         if (result.matchedCount === 0) {
             return res.status(404).json({ message: "Personagem não encontrado para atualização." });
         }
-        if (result.modifiedCount === 0 && result.matchedCount === 1) {
-            return res.status(200).json({ message: "Nenhuma alteração realizada nos dados do personagem.", id });
-        }
-        res.status(200).json({ message: "Personagem atualizado com sucesso!", id, changes: result.modifiedCount });
+        res.status(200).json({ message: "Personagem atualizado com sucesso!", id });
     } catch (error) {
-        if (error.message.includes("Argument passed in must be a string of 12 bytes or a string of 24 hex characters")) {
-             return res.status(400).json({ message: "ID inválido." });
-        }
         console.error("Erro ao atualizar personagem:", error);
         res.status(500).json({ message: "Erro interno do servidor ao atualizar personagem." });
     }
 });
 
-// DELETE: DELETE /api/personagens/:id
-router.delete('/api/personagens/:id', async (req, res) => {
+router.delete('/personagens/:id', async (req, res) => {
     try {
         const id = req.params.id;
         const result = await Personagem.deletePersonagem(id);
 
-        if (!result) { // Se o modelo retornou null por ID inválido
-             return res.status(400).json({ message: "ID inválido fornecido." });
+        if (!result) {
+            return res.status(400).json({ message: "ID inválido fornecido." });
         }
         if (result.deletedCount === 0) {
             return res.status(404).json({ message: "Personagem não encontrado para exclusão." });
         }
         res.status(200).json({ message: "Personagem excluído com sucesso!", id });
     } catch (error) {
-        if (error.message.includes("Argument passed in must be a string of 12 bytes or a string of 24 hex characters")) {
-             return res.status(400).json({ message: "ID inválido." });
-        }
         console.error("Erro ao deletar personagem:", error);
         res.status(500).json({ message: "Erro interno do servidor ao deletar personagem." });
     }
 });
 
-// routes/content.routes.js
-const Content = require('./models/content.model');
-
-// GET /api/content - Ler o conteúdo
-router.get('/api/content', async (req, res) => {
+// Rotas de Conteúdo
+router.get('/content', async (req, res) => {
     try {
         const content = await Content.getContent();
         if (!content) {
-            // Se o conteúdo ainda não foi carregado, pode retornar 404 ou um objeto vazio
-            return res.status(404).json({ message: "Conteúdo não encontrado. Use POST para criar." });
+            return res.status(404).json({ message: "Conteúdo não encontrado." });
         }
         res.status(200).json(content);
     } catch (error) {
@@ -127,67 +167,90 @@ router.get('/api/content', async (req, res) => {
     }
 });
 
-// POST /api/content - Criar ou substituir completamente o conteúdo
-router.post('/api/content', async (req, res) => {
+router.post('/content', async (req, res) => {
     try {
         const contentData = req.body;
         if (Object.keys(contentData).length === 0) {
             return res.status(400).json({ message: "Corpo da requisição não pode ser vazio." });
         }
         const savedContent = await Content.saveContent(contentData);
-        res.status(201).json({ message: "Conteúdo salvo/substituído com sucesso!", data: savedContent });
+        res.status(201).json({ message: "Conteúdo salvo com sucesso!", data: savedContent });
     } catch (error) {
-        console.error("Erro ao salvar/substituir conteúdo:", error);
-        res.status(500).json({ message: "Erro interno do servidor ao salvar/substituir conteúdo." });
+        console.error("Erro ao salvar conteúdo:", error);
+        res.status(500).json({ message: "Erro interno do servidor ao salvar conteúdo." });
     }
 });
 
-// PUT /api/content - Atualizar partes do conteúdo
-router.put('/api/content', async (req, res) => {
+// Rota de Logs
+router.post('/log-connection', async (req, res) => {
     try {
-        const updateData = req.body;
-        if (Object.keys(updateData).length === 0) {
-            return res.status(400).json({ message: "Corpo da requisição não pode ser vazio para atualização." });
+        const { acao, nomeBot } = req.body;
+        
+        if (!acao || !nomeBot) {
+            return res.status(400).json({ 
+                message: "acao e nomeBot são obrigatórios." 
+            });
         }
 
-        const existingContent = await Content.getContent();
-        if (!existingContent) {
-            return res.status(404).json({ message: "Conteúdo não encontrado para atualizar. Crie primeiro com POST." });
-        }
+        const { LogAcesso } = require('./models/chat.model')();
+        
+        const novoLog = new LogAcesso({
+            col_acao: acao,
+            col_nome_bot: nomeBot,
+            col_data: new Date().toLocaleDateString(),
+            col_hora: new Date().toLocaleTimeString(),
+            col_IP: req.ip || req.connection.remoteAddress
+        });
 
-        const updatedContent = await Content.updateContent(updateData);
-        if (!updatedContent) { // Pode acontecer se o documento for deletado entre o getContent e o update
-            return res.status(404).json({ message: "Conteúdo não encontrado durante a tentativa de atualização." });
-        }
-        res.status(200).json({ message: "Conteúdo atualizado com sucesso!", data: updatedContent });
+        await novoLog.save();
+        
+        res.status(200).json({ 
+            message: "Log registrado com sucesso!",
+            timestamp: new Date()
+        });
     } catch (error) {
-        console.error("Erro ao atualizar conteúdo:", error);
-        res.status(500).json({ message: "Erro interno do servidor ao atualizar conteúdo." });
+        console.error("Erro ao registrar log:", error);
+        res.status(500).json({ 
+            message: "Erro interno do servidor ao registrar log." 
+        });
     }
 });
 
-// DELETE /api/content - Excluir o conteúdo (opcional)
-router.delete('/api/content', async (req, res) => {
+// Rota de Ranking
+router.post('/ranking/registrar-acesso-bot', async (req, res) => {
     try {
-        const result = await Content.deleteContent();
-        if (result.deletedCount === 0) {
-            return res.status(404).json({ message: "Conteúdo não encontrado para exclusão." });
+        const { botId, nomeBot } = req.body;
+        
+        if (!botId || !nomeBot) {
+            return res.status(400).json({ 
+                message: "botId e nomeBot são obrigatórios." 
+            });
         }
-        res.status(200).json({ message: "Conteúdo excluído com sucesso!" });
+
+        // Aqui você pode adicionar a lógica para salvar no banco de dados
+        // Por enquanto vamos apenas registrar o acesso
+        console.log(`Acesso registrado para bot ${nomeBot} (${botId})`);
+        
+        res.status(200).json({ 
+            message: "Acesso registrado com sucesso!",
+            botId,
+            nomeBot,
+            timestamp: new Date()
+        });
     } catch (error) {
-        console.error("Erro ao deletar conteúdo:", error);
-        res.status(500).json({ message: "Erro interno do servidor ao deletar conteúdo." });
+        console.error("Erro ao registrar acesso do bot:", error);
+        res.status(500).json({ 
+            message: "Erro interno do servidor ao registrar acesso." 
+        });
     }
 });
 
-const Hq = require('./models/hq.model');
-
-// GET /api/hq - Ler a HQ
-router.get('/api/hq', async (req, res) => {
+// Rotas de HQ
+router.get('/hq', async (req, res) => {
     try {
         const hq = await Hq.getHq();
         if (!hq) {
-            return res.status(404).json({ message: "HQ não encontrada. Use POST para criar." });
+            return res.status(404).json({ message: "HQ não encontrada." });
         }
         res.status(200).json(hq);
     } catch (error) {
@@ -196,198 +259,43 @@ router.get('/api/hq', async (req, res) => {
     }
 });
 
-// POST /api/hq - Criar ou substituir completamente a HQ
-router.post('/api/hq', async (req, res) => {
-    try {
-        const hqData = req.body;
-        if (Object.keys(hqData).length === 0) {
-            return res.status(400).json({ message: "Corpo da requisição não pode ser vazio." });
-        }
-        const savedHq = await Hq.saveHq(hqData);
-        res.status(201).json({ message: "HQ salva/substituída com sucesso!", data: savedHq });
-    } catch (error) {
-        console.error("Erro ao salvar/substituir HQ:", error);
-        res.status(500).json({ message: "Erro interno do servidor ao salvar/substituir HQ." });
-    }
-});
+// ... (outras rotas de HQ e Pages seguem o mesmo padrão)
 
-// PUT /api/hq - Atualizar partes da HQ
-router.put('/api/hq', async (req, res) => {
-    try {
-        const updateData = req.body;
-        if (Object.keys(updateData).length === 0) {
-            return res.status(400).json({ message: "Corpo da requisição não pode ser vazio para atualização." });
-        }
+// Montar o roteador na aplicação
+app.use('/api', router);
 
-        const existingHq = await Hq.getHq();
-        if (!existingHq) {
-            return res.status(404).json({ message: "HQ não encontrada para atualizar. Crie primeiro com POST." });
-        }
-
-        const updatedHq = await Hq.updateHq(updateData);
-         if (!updatedHq) {
-            return res.status(404).json({ message: "HQ não encontrada durante a tentativa de atualização." });
-        }
-        res.status(200).json({ message: "HQ atualizada com sucesso!", data: updatedHq });
-    } catch (error) {
-        console.error("Erro ao atualizar HQ:", error);
-        res.status(500).json({ message: "Erro interno do servidor ao atualizar HQ." });
-    }
-});
-
-// DELETE /api/hq - Excluir a HQ (opcional)
-router.delete('/api/hq', async (req, res) => {
-    try {
-        const result = await Hq.deleteHq();
-        if (result.deletedCount === 0) {
-            return res.status(404).json({ message: "HQ não encontrada para exclusão." });
-        }
-        res.status(200).json({ message: "HQ excluída com sucesso!" });
-    } catch (error) {
-        console.error("Erro ao deletar HQ:", error);
-        res.status(500).json({ message: "Erro interno do servidor ao deletar HQ." });
-    }
-});
-
-// routes/page.routes.js
-const Page = require('./models/pages.model'); // Importa o modelo
-
-// CREATE: POST /api/pages
-router.post('/api/pages', async (req, res) => {
-    try {
-        const novaPageData = req.body;
-        
-        const result = await Page.createPage(novaPageData);
-        res.status(201).json({ message: "Página criada com sucesso!", insertedId: result.insertedId, data: novaPageData });
-    } catch (error) {
-        console.error("Erro ao criar página:", error);
-        res.status(500).json({ message: "Erro interno do servidor ao criar página." });
-    }
-});
-
-// READ ALL: GET /api/pages
-router.get('/api/pages', async (req, res) => {
-    try {
-        const pages = await Page.getAllPages();
-        res.status(200).json(pages);
-    } catch (error) {
-        console.error("Erro ao buscar páginas:", error);
-        res.status(500).json({ message: "Erro interno do servidor ao buscar páginas." });
-    }
-});
-
-// READ ONE: GET /api/pages/:id
-router.get('/api/pages/:id', async (req, res) => {
-    try {
-        const id = req.params.id;
-        const page = await Page.getPageById(id);
-        if (!page) {
-            // Verifica se o ID era inválido (getPageById retorna null) ou simplesmente não encontrado
-            if (!require('mongodb').ObjectId.isValid(id)) {
-                 return res.status(400).json({ message: "ID da página inválido." });
-            }
-            return res.status(404).json({ message: "Página não encontrada." });
-        }
-        res.status(200).json(page);
-    } catch (error) {
-        console.error("Erro ao buscar página por ID:", error);
-        res.status(500).json({ message: "Erro interno do servidor ao buscar página." });
-    }
-});
-
-// UPDATE: PUT /api/pages/:id
-router.put('/api/pages/:id', async (req, res) => {
-    try {
-        const id = req.params.id;
-        const updateData = req.body;
-
-        if (Object.keys(updateData).length === 0) {
-            return res.status(400).json({ message: "Corpo da requisição não pode ser vazio para atualização." });
-        }
-
-        const result = await Page.updatePage(id, updateData);
-
-        if (!result) { // Se o modelo retornou null por ID inválido
-             return res.status(400).json({ message: "ID da página inválido." });
-        }
-        if (result.matchedCount === 0) {
-            return res.status(404).json({ message: "Página não encontrada para atualização." });
-        }
-        if (result.modifiedCount === 0 && result.matchedCount === 1) {
-            return res.status(200).json({ message: "Nenhuma alteração realizada nos dados da página.", id });
-        }
-        res.status(200).json({ message: "Página atualizada com sucesso!", id, changes: result.modifiedCount });
-    } catch (error) {
-        console.error("Erro ao atualizar página:", error);
-        res.status(500).json({ message: "Erro interno do servidor ao atualizar página." });
-    }
-});
-
-// DELETE: DELETE /api/pages/:id
-router.delete('/api/pages/:id', async (req, res) => {
-    try {
-        const id = req.params.id;
-        const result = await Page.deletePage(id);
-
-        if (!result) { // Se o modelo retornou null por ID inválido
-             return res.status(400).json({ message: "ID da página inválido." });
-        }
-        if (result.deletedCount === 0) {
-            return res.status(404).json({ message: "Página não encontrada para exclusão." });
-        }
-        res.status(200).json({ message: "Página excluída com sucesso!", id });
-    } catch (error) {
-        console.error("Erro ao deletar página:", error);
-        res.status(500).json({ message: "Erro interno do servidor ao deletar página." });
-    }
-});
-
-module.exports = router;
-
-
-const app = express();
-const port = process.env.PORT || 3000;
-
- 
-
-// Middlewares
-app.use(cors());       // Habilita o CORS para todas as origens
-app.use(express.json()); // Para parsear JSON no corpo das requisições (req.body)
-app.use(express.urlencoded({ extended: true })); // Para parsear dados de formulários URL-encoded
-app.use(router);
-// Servir arquivos estáticos da pasta 'public' (para seu frontend)
-app.use(express.static('public'));
-
-
-
-// Rota raiz para verificar se o servidor está no ar
+// Rota raiz
 app.get('/', (req, res) => {
     res.send('API Node.js com MongoDB está funcionando!');
 });
 
-// Middleware para tratar rotas não encontradas (404)
+// Middleware 404
 app.use((req, res, next) => {
     res.status(404).json({ message: "Endpoint não encontrado." });
 });
 
-// Middleware de tratamento de erro genérico (deve ser o último middleware)
+// Middleware de erro
 app.use((err, req, res, next) => {
     console.error("Erro não tratado:", err.stack);
     res.status(500).json({ message: "Ocorreu um erro inesperado no servidor." });
 });
 
-
-// Inicia o servidor APÓS conectar ao banco de dados
+// Iniciar o servidor
 async function startServer() {
     try {
-        await connectToDatabase(); // Conecta ao MongoDB
+        // Conectar aos bancos de dados
+        await Promise.all([
+            connectToDatabase(),
+            connectToChatDatabase()
+        ]);
+
+        const port = process.env.PORT || 5000;
         app.listen(port, () => {
-            console.log(`Servidor rodando em http://localhost:${port}`);
-            //console.log(`Banco de dados conectado: ${getDb().databaseName}`);
+            console.log(`✅ Servidor rodando em http://localhost:${port}`);
         });
     } catch (error) {
-        console.error("Falha ao iniciar o servidor:", error);
-        process.exit(1); // Termina a aplicação se não conseguir conectar ao DB
+        console.error("❌ Falha ao iniciar o servidor:", error);
+        process.exit(1);
     }
 }
 

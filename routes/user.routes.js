@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const User = require('../models/user.model');
+const getUserModel = require('../models/user.model');
+const User = getUserModel();
 
 // Criar novo usuário (apenas admin)
 router.post('/', async (req, res) => {
@@ -50,6 +51,11 @@ router.get('/', async (req, res) => {
 // Obter usuário específico (apenas admin)
 router.get('/:id', async (req, res) => {
     try {
+        // Verificar se o ID é um ObjectId válido
+        if (!req.params.id.match(/^[0-9a-fA-F]{24}$/)) {
+            return res.status(400).json({ message: 'ID inválido' });
+        }
+        
         const user = await User.findById(req.params.id).select('-password');
         if (!user) {
             return res.status(404).json({ message: 'Usuário não encontrado' });
@@ -64,6 +70,11 @@ router.get('/:id', async (req, res) => {
 // Atualizar usuário (apenas admin)
 router.put('/:id', async (req, res) => {
     try {
+        // Verificar se o ID é um ObjectId válido
+        if (!req.params.id.match(/^[0-9a-fA-F]{24}$/)) {
+            return res.status(400).json({ message: 'ID inválido' });
+        }
+        
         const { username, password, role } = req.body;
         const updateData = {};
 
@@ -94,6 +105,11 @@ router.put('/:id', async (req, res) => {
 // Excluir usuário (apenas admin)
 router.delete('/:id', async (req, res) => {
     try {
+        // Verificar se o ID é um ObjectId válido
+        if (!req.params.id.match(/^[0-9a-fA-F]{24}$/)) {
+            return res.status(400).json({ message: 'ID inválido' });
+        }
+        
         const user = await User.findByIdAndDelete(req.params.id);
         if (!user) {
             return res.status(404).json({ message: 'Usuário não encontrado' });

@@ -66,10 +66,22 @@ const visualizarRanking = (req, res) => {
 // Salvar histórico de chat
 const salvarHistorico = async (req, res) => {
     try {
+        console.log("📥 Recebido request para salvar histórico:", {
+            body: req.body,
+            sessionId: req.body.sessionId,
+            botId: req.body.botId
+        });
+
         const { SessaoChat } = getModels();
+        if (!SessaoChat) {
+            console.error("❌ Modelo SessaoChat não disponível");
+            return res.status(500).json({ error: "Database não está conectado" });
+        }
+
         const { sessionId, botId, startTime, endTime, messages, userId } = req.body;
         
         if (!sessionId || !botId) {
+            console.error("❌ Dados incompletos:", { sessionId, botId });
             return res.status(400).json({ error: "Dados incompletos." });
         }
 

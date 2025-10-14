@@ -2,8 +2,8 @@
 require('dotenv').config();
 const mongoose = require('mongoose');
 
-const chatUri = process.env.MONGO_URI || 'mongodb+srv://isacastro014:hqTCC3@cluster0.lpltg9p.mongodb.net/chatbot';
-const chatDbName = 'chatbot';
+const chatUri = process.env.MONGO_URI || 'mongodb+srv://isacastro014:hqTCC3@cluster0.lpltg9p.mongodb.net/Chatbot';
+const chatDbName = 'Chatbot';
 
 // Função para conectar ao banco de dados do chatbot
 async function connectToChatDatabase() {
