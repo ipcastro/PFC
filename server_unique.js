@@ -264,7 +264,47 @@ router.get('/hq', async (req, res) => {
     }
 });
 
-// ... (outras rotas de HQ e Pages seguem o mesmo padrão)
+// Rotas de Pages
+router.get('/pages', async (req, res) => {
+    try {
+        const pages = await Page.getPages();
+        if (!pages) {
+            return res.status(404).json({ message: "Páginas não encontradas." });
+        }
+        res.status(200).json(pages);
+    } catch (error) {
+        console.error("Erro ao buscar páginas:", error);
+        res.status(500).json({ message: "Erro interno do servidor ao buscar páginas." });
+    }
+});
+
+router.post('/pages', async (req, res) => {
+    try {
+        const pageData = req.body;
+        if (Object.keys(pageData).length === 0) {
+            return res.status(400).json({ message: "Corpo da requisição não pode ser vazio." });
+        }
+        const savedPage = await Page.savePage(pageData);
+        res.status(201).json({ message: "Página salva com sucesso!", data: savedPage });
+    } catch (error) {
+        console.error("Erro ao salvar página:", error);
+        res.status(500).json({ message: "Erro interno do servidor ao salvar página." });
+    }
+});
+
+router.post('/hq', async (req, res) => {
+    try {
+        const hqData = req.body;
+        if (Object.keys(hqData).length === 0) {
+            return res.status(400).json({ message: "Corpo da requisição não pode ser vazio." });
+        }
+        const savedHq = await Hq.saveHq(hqData);
+        res.status(201).json({ message: "HQ salva com sucesso!", data: savedHq });
+    } catch (error) {
+        console.error("Erro ao salvar HQ:", error);
+        res.status(500).json({ message: "Erro interno do servidor ao salvar HQ." });
+    }
+});
 
 // Montar os roteadores na aplicação
 // Rota protegida para download de PDFs

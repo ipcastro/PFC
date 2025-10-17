@@ -64,10 +64,22 @@ async function deletePage(id) {
     }
 }
 
+// Aliases para manter compatibilidade com as rotas
+async function getPages() {
+    return await getAllPages();
+}
+
+async function savePage(pageData) {
+    return await createPage(pageData);
+}
+
 module.exports = {
     createPage,
     getAllPages,
     getPageById,
     updatePage,
-    deletePage
+    deletePage,
+    // Exportar aliases
+    getPages,
+    savePage
 };
