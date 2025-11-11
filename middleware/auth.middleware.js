@@ -3,21 +3,22 @@ const jwt = require('jsonwebtoken');
 // Middleware para verificar o token JWT
 const authMiddleware = (req, res, next) => {
     try {
-        // Pegar o token do cabeçalho Authorization
-        const authHeader = req.headers.authorization;
-        if (!authHeader) {
-            return res.status(401).json({ message: 'Token não fornecido' });
-        }
+        // Pegar o token do cabeçalho Authorization ou query string
+        let token = req.query.token;
+        
+        if (!token) {
+            const authHeader = req.headers.authorization;
+            if (!authHeader) {
+                return res.status(401).json({ message: 'Token não fornecido' });
+            }
 
-        // O token deve estar no formato "Bearer <token>"
-        const parts = authHeader.split(' ');
-        if (parts.length !== 2) {
-            return res.status(401).json({ message: 'Token mal formatado' });
-        }
+            // O token deve estar no formato "Bearer <token>"
+            const parts = authHeader.split(' ');
+            if (parts.length !== 2 || !/^Bearer$/i.test(parts[0])) {
+                return res.status(401).json({ message: 'Token mal formatado' });
+            }
 
-        const [scheme, token] = parts;
-        if (!/^Bearer$/i.test(scheme)) {
-            return res.status(401).json({ message: 'Token mal formatado' });
+            token = parts[1];
         }
 
         // Verificar se o token é válido

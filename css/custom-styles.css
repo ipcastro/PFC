@@ -607,6 +607,58 @@
     }
 }
 
+/* Hero collage tweaks: espaçamento, tamanhos responsivos e animação sutil */
+.hero-collage { 
+    gap: 1rem;
+}
+.hero-collage .rounded-2xl {
+    border-radius: 12px;
+    overflow: hidden;
+}
+.hero-collage img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(.2,.9,.3,1), box-shadow 0.3s ease;
+}
+.hero-collage .float-y {
+    animation: floatY 6s ease-in-out infinite;
+}
+.hero-collage .rounded-2xl:hover img {
+    transform: scale(1.03);
+}
+
+@keyframes floatY {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-8px); }
+    100% { transform: translateY(0px); }
+}
+
+/* Ajustes responsivos adicionais para evitar espaços vazios */
+@media (min-width: 768px) {
+    .hero-collage { gap: 1.25rem; }
+}
+
+/* Posicionamento responsivo específico para algumas imagens do hero */
+.hero-foto4,
+.hero-foto3 {
+    transition: transform 0.45s cubic-bezier(.2,.9,.3,1);
+}
+
+/* Quando a tela fica um pouco menor, desloca a foto4 mais para baixo e a foto3 levemente */
+@media (max-width: 1100px) {
+    .hero-foto4 { transform: translateY(20px); }
+    .hero-foto3 { transform: translateY(10px); }
+}
+
+/* Em telas ainda menores, aumenta um pouco o deslocamento para manter o espaçamento visual */
+@media (max-width: 900px) {
+    .hero-foto4 { transform: translateY(30px); }
+    .hero-foto3 { transform: translateY(16px); }
+}
+
+
 /* Enhanced Floating Cards */
 .floating-card:hover {
     animation-play-state: paused;

@@ -1,0 +1,82 @@
+/* Estilos do Menu Hamburguer */
+.hamburger {
+    display: none;
+    cursor: pointer;
+    border: none;
+    background: none;
+    padding: 10px;
+}
+
+.hamburger-line {
+    display: block;
+    width: 25px;
+    height: 3px;
+    margin: 5px auto;
+    transition: all 0.3s ease-in-out;
+    background-color: #374151;
+}
+
+.dark .hamburger-line {
+    background-color: #fff;
+}
+
+/* Animação do hamburguer para X */
+.hamburger.active .hamburger-line:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+
+.hamburger.active .hamburger-line:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger.active .hamburger-line:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -6px);
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .hamburger {
+        display: block;
+        position: fixed;
+        right: 20px;
+        top: 20px;
+        z-index: 1000;
+    }
+
+    #navbar-sticky {
+        position: fixed;
+        right: -100%;
+        top: 0;
+        flex-direction: column;
+        width: 250px;
+        height: 100vh;
+        text-align: left;
+        transition: right 0.3s ease-in-out;
+        background-color: #fff;
+        padding: 80px 0;
+        box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .dark #navbar-sticky {
+        background-color: #1f2937;
+    }
+
+    #navbar-sticky.active {
+        right: 0;
+    }
+
+    #navbar-sticky ul {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    #navbar-sticky li {
+        margin: 10px 20px;
+    }
+
+    #navbar-sticky a {
+        width: 100%;
+        display: block;
+        padding: 10px;
+    }
+}
